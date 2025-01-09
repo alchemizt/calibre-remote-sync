@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Default installation directory
-INSTALL_DIR="/opt/calibre-library-remote-sync"
-SOURCE_DIR=$(pwd)
+INSTALL_DIR="$HOME/.local/share/calibre-library-remote-sync"
 
+# Get the directory where the installer script resides
+INSTALLER_DIR=$(dirname "$(realpath "$0")")
+
+# Get the parent directory (project directory)
+SOURCE_DIR=$(dirname "$INSTALLER_DIR")
 
 SCRIPTS_DIR="$INSTALL_DIR/scripts"
 CONFIG_DIR="$INSTALL_DIR/config"
@@ -19,7 +23,6 @@ SERVICE_FILE="$SERVICES_DIR/remote-sync.service"
 SYSTEMD_SERVICE_FILE="/etc/systemd/system/remote-sync.service"
 
 
-
 # Ask the user for the installation directory
 read -p "Enter the installation directory (default: $INSTALL_DIR): " CUSTOM_INSTALL_DIR
 if [ ! -z "$CUSTOM_INSTALL_DIR" ]; then
@@ -31,9 +34,9 @@ mkdir -p "$INSTALL_DIR"
 
 # Copy files to the install directory
 echo "Copying files to the installation directory: $INSTALL_DIR"
-cp -R ./scripts "$INSTALL_DIR"
-cp -R ./config "$INSTALL_DIR"
-cp -R ./services "$INSTALL_DIR"
+cp -R "$SOURCE_DIR/scripts" "$INSTALL_DIR"
+cp -R "$SOURCE_DIR/config" "$INSTALL_DIR"
+cp -R "$SOURCE_DIR/services" "$INSTALL_DIR"
 mkdir -p "$LOGS_DIR"
 
 
@@ -66,9 +69,6 @@ echo "Enabling and starting the systemd service..."
 sudo systemctl daemon-reload
 sudo systemctl enable remote-sync.service
 sudo systemctl start remote-sync.service
-
-
-
 
 
 # Function to prompt for user input

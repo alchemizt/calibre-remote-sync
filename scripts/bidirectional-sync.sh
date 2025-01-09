@@ -1,8 +1,20 @@
 #!/bin/bash
 
+# Get the directory where the installer script resides
+CURRENT_DIR=$(dirname "$(realpath "$0")")
+
+
+# Get the parent directory (project directory)
+PROJECT_DIR=$(dirname "$CURRENT_DIR")
+
+CONFIG_DIR="$PROJECT_DIR/config"
+CONFIG_FILE="${CONFIG_DIR}/config.env"
+LOG_DIR="$PROJECT_DIR/logs"
+LOG_FILE="$LOG_DIR/sync-files.log"
+echo $CONFIG_FILE   
 # Load environment variables
-if [ -f "$(dirname "$0")/../config/config.env" ]; then
-    source "$(dirname "$0")/../config/config.env"
+if [ -f "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
 else
     echo "Environment file not found. Please create config/config.env."
     exit 1
