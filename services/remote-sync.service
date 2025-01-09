@@ -1,0 +1,12 @@
+[Unit]
+Description=Sync Remote Directory to Local
+After=network.target
+
+[Service]
+ExecStart=/path/to/remote-sync/scripts/remote-to-local-sync.sh
+Restart=always
+User=your-username
+WorkingDirectory=/path/to/remote-sync
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+# Ignore sensitive data
+config/config.env
+
+# Ignore logs
+logs/
+
+# Ignore system files
+*.swp
+*.bak
+.DS_Store
